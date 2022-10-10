@@ -1,9 +1,9 @@
 package dev.appeazethecheese.votepoints;
 
 import dev.appeazethecheese.votepoints.data.HibernateUtil;
-import dev.appeazethecheese.votepoints.data.commands.VotePointsCommand;
-import dev.appeazethecheese.votepoints.data.commands.VpTopCommand;
+import dev.appeazethecheese.votepoints.commands.*;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -26,6 +26,9 @@ public final class VotePoints extends JavaPlugin {
         logger = this.getLogger();
         HibernateUtil.init();
         Bukkit.getPluginManager().registerEvents(new EventHandler(), this);
+
+        var vpManager = new VpPlayerManager();
+        this.getServer().getServicesManager().register(VpPlayerManager.class, vpManager, this, ServicePriority.Normal);
 
         var vpCommandClass = new VotePointsCommand();
         var vpCommand = this.getCommand("votepoints");

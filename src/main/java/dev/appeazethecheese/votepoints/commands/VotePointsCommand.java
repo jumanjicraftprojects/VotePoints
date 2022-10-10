@@ -1,5 +1,6 @@
-package dev.appeazethecheese.votepoints.data.commands;
+package dev.appeazethecheese.votepoints.commands;
 
+import dev.appeazethecheese.votepoints.VotePoints;
 import dev.appeazethecheese.votepoints.VpPlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -8,11 +9,19 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
 public class VotePointsCommand implements CommandExecutor, TabCompleter {
+
+    private VpPlayerManager vpManager;
+
+    public VotePointsCommand(){
+        vpManager = Bukkit.getServicesManager().load(VpPlayerManager.class);
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(!(sender instanceof Player player)){
@@ -29,12 +38,12 @@ public class VotePointsCommand implements CommandExecutor, TabCompleter {
                     player.sendMessage(ChatColor.RED + "No account with the username " + args[1] + " could be found.");
                 }
                 else {
-                    var points = VpPlayerManager.getPoints(targetPlayer.getUniqueId());
+                    var points = vpManager.getPoints(targetPlayer.getUniqueId());
                     player.sendMessage(ChatColor.YELLOW + targetPlayer.getName() + ChatColor.GREEN + " has " + ChatColor.RED + points + ChatColor.GREEN + " vote points.");
                 }
             }
             else {
-                var points = VpPlayerManager.getPoints(player);
+                var points = vpManager.getPoints(player);
                 player.sendMessage(ChatColor.GREEN + "You have " + ChatColor.RED + String.valueOf(points) + ChatColor.GREEN + " vote points.");
             }
         }
@@ -72,8 +81,8 @@ public class VotePointsCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
 
-                VpPlayerManager.removePoints(player, pointAmount);
-                VpPlayerManager.addPoints(targetPlayer.getUniqueId(), pointAmount);
+                vpManager.removePoints(player, pointAmount);
+                vpManager.addPoints(targetPlayer.getUniqueId(), pointAmount);
 
                 player.sendMessage(ChatColor.GREEN + "You paid " + ChatColor.YELLOW + targetPlayer.getName() + " " + ChatColor.RED + pointAmount + ChatColor.GREEN + " vote points.");
                 if(targetPlayer.isOnline()){
@@ -107,7 +116,7 @@ public class VotePointsCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
 
-                VpPlayerManager.addPoints(targetPlayer.getUniqueId(), pointAmount);
+                vpManager.addPoints(targetPlayer.getUniqueId(), pointAmount);
 
                 player.sendMessage(ChatColor.GREEN + "Gave " + ChatColor.RED + pointAmount + ChatColor.GREEN + " vote points to " + ChatColor.YELLOW + targetPlayer.getName() + ChatColor.GREEN + ".");
                 if (targetPlayer.isOnline()) {
@@ -141,7 +150,7 @@ public class VotePointsCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
 
-                var success = VpPlayerManager.removePoints(targetPlayer.getUniqueId(), pointAmount);
+                var success = vpManager.removePoints(targetPlayer.getUniqueId(), pointAmount);
                 if(!success){
                     player.sendMessage(ChatColor.RED + "They don't have that many points.");
                     return true;
@@ -174,7 +183,7 @@ public class VotePointsCommand implements CommandExecutor, TabCompleter {
                     return true;
                 }
 
-                VpPlayerManager.setPoints(targetPlayer.getUniqueId(), pointAmount);
+                vpManager.setPoints(targetPlayer.getUniqueId(), pointAmount);
 
                 player.sendMessage(ChatColor.GREEN + "Set " + ChatColor.YELLOW + targetPlayer.getName() + ChatColor.GREEN + "'s vote points to " + ChatColor.RED + pointAmount + ChatColor.GREEN + ".");
                 if (targetPlayer.isOnline()) {
@@ -212,7 +221,7 @@ public class VotePointsCommand implements CommandExecutor, TabCompleter {
         }
         if(args.length == 3){
             if(args[0].equalsIgnoreCase("pay")) {
-                var points = VpPlayerManager.getPoints(player);
+                var points = vpManager.getPoints(player);
                 if (points > 0) {
                     return IntStream.range(1, points + 1).mapToObj(String::valueOf).toList();
                 }

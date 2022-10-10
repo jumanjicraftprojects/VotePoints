@@ -1,4 +1,4 @@
-package dev.appeazethecheese.votepoints.data.commands;
+package dev.appeazethecheese.votepoints.commands;
 
 import dev.appeazethecheese.votepoints.data.HibernateUtil;
 import dev.appeazethecheese.votepoints.data.entities.PlayerPointsEntity;

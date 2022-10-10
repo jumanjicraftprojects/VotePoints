@@ -8,11 +8,11 @@ import java.util.UUID;
 
 public class VpPlayerManager {
 
-    public static int getTotalVotes(Player player){
+    public int getTotalVotes(Player player){
         return getTotalVotes(player.getUniqueId());
     }
 
-    public static int getTotalVotes(UUID playerId){
+    public int getTotalVotes(UUID playerId){
         try(var session = HibernateUtil.getSession()){
             var entity = session.get(PlayerPointsEntity.class, playerId);
             if(entity == null) return 0;
@@ -21,11 +21,11 @@ public class VpPlayerManager {
         }
     }
 
-    public static int getPoints(Player player){
+    public int getPoints(Player player){
         return getPoints(player.getUniqueId());
     }
 
-    public static int getPoints(UUID playerId){
+    public int getPoints(UUID playerId){
         try(var session = HibernateUtil.getSession()){
             var entity = session.get(PlayerPointsEntity.class, playerId);
 
@@ -34,11 +34,11 @@ public class VpPlayerManager {
         }
     }
 
-    public static void setPoints(Player player, int points){
+    public void setPoints(Player player, int points){
         setPoints(player.getUniqueId(), points);
     }
 
-    public static void setPoints(UUID playerId, int points){
+    public void setPoints(UUID playerId, int points){
         try(var session = HibernateUtil.getSession()){
             var entity = session.get(PlayerPointsEntity.class, playerId);
 
@@ -53,19 +53,19 @@ public class VpPlayerManager {
         }
     }
 
-    public static void addPoints(Player player, int points){
+    public void addPoints(Player player, int points){
         addPoints(player.getUniqueId(), points);
     }
 
-    public static void addPoints(UUID playerId, int points){
+    public void addPoints(UUID playerId, int points){
         setPoints(playerId, getPoints(playerId) + points);
     }
 
-    public static boolean removePoints(Player player, int points){
+    public boolean removePoints(Player player, int points){
         return removePoints(player.getUniqueId(), points);
     }
 
-    public static boolean removePoints(UUID playerId, int points){
+    public boolean removePoints(UUID playerId, int points){
         var current = getPoints(playerId);
         if(points > current) return false;
         addPoints(playerId, -points);
