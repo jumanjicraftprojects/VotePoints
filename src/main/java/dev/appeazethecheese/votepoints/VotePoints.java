@@ -39,6 +39,10 @@ public final class VotePoints extends JavaPlugin {
         var vpTopCommand = this.getCommand("vptop");
         vpTopCommand.setExecutor(vpTopCommandClass);
         vpTopCommand.setTabCompleter(vpTopCommandClass);
+
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new Placeholders().register();
+        }
     }
 
     @Override
