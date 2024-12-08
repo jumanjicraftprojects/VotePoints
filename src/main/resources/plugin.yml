@@ -4,17 +4,21 @@ main: dev.appeazethecheese.votepoints.VotePoints
 api-version: 1.19
 prefix: VotePoints
 depend: [ Votifier ]
-softdepend: [ PlaceholderAPI ]
+softdepend: [ PlaceholderAPI, CustomCrates ]
 authors: [ AppeazeTheCheese ]
 description: Integrates with Votifier. Gives points for votes that can be spent in shops.
 commands:
   votepoints:
-    aliases: [vp]
+    aliases: [vp, vpoints]
     description: See how many vote points you have or give some to another player.
     default: true
   votepointstop:
     aliases: [vptop]
     description: See the current vote point and total vote rankings
+    default: true
+  voteshop:
+    aliases: [vpshop, vshop]
+    description: Places you can spend your vote points
     default: true
 permissions:
   votepoints.admin:

@@ -20,12 +20,17 @@ repositories {
     maven {
         url 'https://jitpack.io'
     }
+    maven {
+        url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
+    }
 }
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT'
     compileOnly 'com.github.NuVotifier.NuVotifier:nuvotifier-bukkit:2.7.2'
     compileOnly 'com.github.NuVotifier.NuVotifier:nuvotifier-api:2.7.2'
+    compileOnly 'me.clip:placeholderapi:2.11.3'
+    compileOnly files('lib/CustomCrates.jar')
     shadow 'org.hibernate:hibernate-core:6.1.3.Final'
     shadow 'org.hibernate:hibernate-hikaricp:6.1.3.Final'
     shadow 'com.zaxxer:HikariCP:5.0.1'

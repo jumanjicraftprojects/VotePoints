@@ -48,11 +48,11 @@ public class VotePointsCommand implements CommandExecutor, TabCompleter {
             }
         }
         else if(args[0].equalsIgnoreCase("help")){
-            player.sendMessage(getHelpText(isAdmin));
+            player.sendMessage(getHelpText(label, isAdmin));
         }
         else if(args[0].equalsIgnoreCase("pay")){
             if(args.length < 3){
-                player.sendMessage(getHelpText(isAdmin));
+                player.sendMessage(getHelpText(label, isAdmin));
                 return true;
             }
 
@@ -192,7 +192,7 @@ public class VotePointsCommand implements CommandExecutor, TabCompleter {
             }
         }
         else{
-            player.sendMessage(getHelpText(isAdmin));
+            player.sendMessage(getHelpText(label, isAdmin));
         }
         return true;
     }
@@ -239,21 +239,22 @@ public class VotePointsCommand implements CommandExecutor, TabCompleter {
         return new ArrayList<>();
     }
 
-    private String getHelpText(boolean isAdmin){
+    private String getHelpText(String label, boolean isAdmin){
         var usage = "Usage:\n";
 
         if(isAdmin){
             usage +=
-                    ChatColor.YELLOW + "/votepoints bal [{playerName}]: " + ChatColor.RESET + "See how many vote points you or another player has.\n" +
-                    ChatColor.YELLOW + "/votepoints add {playerName} {amount} [force]: " + ChatColor.RESET + "Add some points to a player.\n" +
-                    ChatColor.YELLOW + "/votepoints remove {playerName} {amount} [force]: " + ChatColor.RESET + "Remove some points from a player.\n" +
-                    ChatColor.YELLOW + "/votepoints set {playerName} {amount} [force]: " + ChatColor.RESET + "Set how many vote points a player has.\n";
+                    ChatColor.YELLOW + "/%1$s bal [{playerName}]: " + ChatColor.RESET + "See how many vote points you or another player has.\n" +
+                    ChatColor.YELLOW + "/%1$s add {playerName} {amount} [force]: " + ChatColor.RESET + "Add some points to a player.\n" +
+                    ChatColor.YELLOW + "/%1$s remove {playerName} {amount} [force]: " + ChatColor.RESET + "Remove some points from a player.\n" +
+                    ChatColor.YELLOW + "/%1$s set {playerName} {amount} [force]: " + ChatColor.RESET + "Set how many vote points a player has.\n";
         }
         else {
-            usage += ChatColor.YELLOW + "/votepoints bal: " + ChatColor.RESET + "See how many vote points you have.\n";
+            usage += ChatColor.YELLOW + "/%1$s bal: " + ChatColor.RESET + "See how many vote points you have.\n";
         }
-        return usage +
-                ChatColor.YELLOW + "/votepoints pay {playerName} {amount} [force]: " + ChatColor.RESET + "Send some points to another player.\n" +
-                ChatColor.YELLOW + "/votepoints help: " + ChatColor.RESET + "Display this help menu";
+        usage +=
+                ChatColor.YELLOW + "/%1$s pay {playerName} {amount} [force]: " + ChatColor.RESET + "Send some points to another player.\n" +
+                ChatColor.YELLOW + "/%1$s help: " + ChatColor.RESET + "Display this help menu";
+        return String.format(usage, label);
     }
 }
