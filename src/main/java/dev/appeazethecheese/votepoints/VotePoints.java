@@ -52,7 +52,7 @@ public final class VotePoints extends JavaPlugin {
             voteShopCommand.setExecutor(voteShopCommandClass);
             voteShopCommand.setTabCompleter(voteShopCommandClass);
 
-            if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            /*if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
                 this.placeholders = new Placeholders();
                 if(placeholders.canRegister()){
                     placeholders.register();
@@ -60,7 +60,7 @@ public final class VotePoints extends JavaPlugin {
                 else {
                     logger.warning("Failed to register Placeholder API Expansion.");
                 }
-            }
+            }*/
         } catch (Throwable e){
             logger.severe("Failed to load VotePoints");
             e.printStackTrace();

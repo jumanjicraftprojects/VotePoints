@@ -3,10 +3,10 @@ version: '${version}'
 main: dev.appeazethecheese.votepoints.VotePoints
 api-version: 1.19
 prefix: VotePoints
-depend: [ Votifier ]
+depend: [ VotifierPlus ]
 softdepend: [ PlaceholderAPI, CustomCrates ]
 authors: [ AppeazeTheCheese ]
-description: Integrates with Votifier. Gives points for votes that can be spent in shops.
+description: Integrates with VotifierPlus. Gives points for votes that can be spent in shops.
 commands:
   votepoints:
     aliases: [vp, vpoints]
